@@ -51,14 +51,52 @@ Script ini memerlukan file quran dan terjemahan yang ada pada project [quran-jso
 
 Semua konfigurasi build dapat diubah lewat environment variable. Proses build secara umum sangat cepat hanya memerlukan waktu kurang dari satu detik.
 
-```
+```sh
 $ export QURAN_JSON_DIR=/path/to/directory/of/quran-json
 $ php src/generator/generator.php
 Generating website...done.
 ```
 
-Berikut adalah daftar konfigurasi yang dapat diubah.
+Contoh mengubah semua URL agar sesuai dengan domain tertentu misal `https://example.com`.
 
+```sh
+$ export QURAN_JSON_DIR=/path/to/directory/of/quran-json
+$ export QURAN_BASE_URL=https://example.com
+$ php src/generator/generator.php
+Generating website...done.
+```
+
+Contoh menambahkan kode HTML dalam HEAD tag, misal kode Google Analytics.
+
+```sh
+$ export QURAN_JSON_DIR=/path/to/directory/of/quran-json
+$ export QURAN_RAW_HTML_META="
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-123456789-1\"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-123456789-1');
+</script>"
+$ php src/generator/generator.php
+Generating website...done.
+```
+
+Jika menggunakan Docker maka mount direktori dari quran-web dan quran-json ke dalam container. Asumsi bahwa sekarang saya berada pada direktori `/home/user`.
+
+```sh
+docker run --rm --name quranweb -it -w /quran-web \
+ -v /home/user/quran-web:/quran-web \
+ -v /home/user/quran-json:/quran-json \
+ -e QURAN_BASE_URL=https://example.com \
+ -e QURAN_JSON_DIR=/quran-json \
+ -e QURAN_RAW_HTML_META="$RAW_HTML_META" \
+php:8.2-cli sh build.sh
+```
+
+Berikut adalah daftar konfigurasi yang dapat diubah.
 
 | Konfigurasi | Status | Keterangan |
 |-------------|--------|------------|
@@ -69,7 +107,7 @@ Berikut adalah daftar konfigurasi yang dapat diubah.
 | QURAN\_END\_SURAH | optional | Akhir surah. Default = 114 |
 | QURAN\_TEMPLATE_DIR | optional | Path ke template directory. Default = src/generator/template |
 | QURAN\_APP\_NAME | optional | Nama dari website. Default = QuranWeb.
-| QURAN\_ANALYTICS\_ID | optional | Google Analytics tracking id. Default tidak ada.
+| QURAN\_RAW\_HTML\_META | optional | Kode Raw HTML yang ditambahkan ke dalam tag &lt;head&gt;&lt;/head&gt;.
 | QURAN\_OG\_IMAGE\_URL | optional | OpenGraph image url. Default tidak ada.
 
 Isi dari direktori `build/` dapat anda hapus jika memang sudah tidak diperlukan.
@@ -77,6 +115,10 @@ Isi dari direktori `build/` dapat anda hapus jika memang sudah tidak diperlukan.
 ```
 $ rm -rf build/*
 ```
+
+## Changelog
+
+Lihat file [CHANGELOG.md](CHANGELOG.md).
 
 ## Penulis
 
