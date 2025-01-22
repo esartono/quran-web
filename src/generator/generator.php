@@ -21,7 +21,7 @@ $config = [
     'beginSurah' => env('QURAN_BEGIN_SURAH', 1),
     'endSurah' => env('QURAN_END_SURAH', 114),
     'githubProjectUrl' => env('QURAN_GITHUB_PROJECT_URL', 'https://github.com/rioastamal/quran-web'),
-    'analyticsId' => env('QURAN_ANALYTICS_ID'),
+    'rawHtmlMeta' => env('QURAN_RAW_HTML_META'),
     'ogImageUrl' => env('QURAN_OG_IMAGE_URL', 'https://s3-ap-southeast-1.amazonaws.com/quranweb/quranweb-1024.png')
 ];
 

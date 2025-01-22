@@ -75,7 +75,7 @@ class SurahGenerator
             'beginSurah' => 1,
             'endSurah' => 114,
             'appName' => 'QuranWeb',
-            'analyticsId' => null
+            'rawHtmlMeta' => ''
         ];
         $this->config = $config + $defaultConfig;
 
@@ -575,18 +575,8 @@ INDEX;
             ], $metaTemplate);
         }
 
-        if ($analyticsId = $this->config['analyticsId']) {
-            $meta['gtag'] = <<<META
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={$analyticsId}"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', '{$analyticsId}');
-</script>
-META;
+        if ($rawHtmlMeta = $this->config['rawHtmlMeta']) {
+            $meta['raw'] = str_replace("\\n", "\n", $rawHtmlMeta);
         }
 
         return $meta;
