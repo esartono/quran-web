@@ -1,5 +1,13 @@
 Penambahan atau perubahan fitur pada QuranWeb akan selalu didokumentasikan pada file ini.
 
+## Versi 1.8
+
+Perubahan utama yang dilakukan pada QuranWeb diantaranya:
+
+- Menghilangkan konfigurasi Google Analytics
+- Menambahkan konfigurasi untuk kode RAW HTML pada tag HEAD
+- Helper baru functions.sh untuk menjalankan via Docker
+
 ## Versi 1.7.2
 
 Perubahan utama yang dilakukan pada QuranWeb diantaranya:
