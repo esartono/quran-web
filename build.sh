@@ -19,6 +19,7 @@
     }
 
     tar xvf /tmp/quran-json.tar.gz -C /tmp
+    export QURAN_JSON_DIR=/tmp/quran-json-master
 }
 
 php src/generator/generator.php
